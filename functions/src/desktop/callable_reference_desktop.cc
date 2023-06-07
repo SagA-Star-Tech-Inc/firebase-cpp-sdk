@@ -234,6 +234,14 @@ void HttpsCallableReferenceInternal::ResolveFuture(
   std::string body_str = response->GetBody();
   firebase::LogDebug("Cloud Function response body = %s", body_str.c_str());
   Variant body = util::JsonToVariant(body_str.c_str());
+  bool is_ok = body_str == "OK";
+  // return early if the response is "OK"
+  if (is_ok) {
+    HttpsCallableResult callable_result;
+    future_impl->CompleteWithResult(future_handle, error,
+                                    error_description.c_str(), callable_result);
+    return;
+  }
   if (!body.is_map()) {
     has_error = true;
     error = kErrorInternal;

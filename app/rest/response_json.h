@@ -66,7 +66,8 @@ class ResponseJson : public Response {
   void MarkCompleted() override {
     // Body could be empty if request failed. Deal this case first since
     // flatbuffer parser does not allow empty input.
-    if (strlen(GetBody()) == 0) {
+    auto response_body = GetBody();
+    if (strlen(GetBody()) == 0 || response_body == "OK") {
       application_data_.reset(new FbsTypeT());
       Response::MarkCompleted();
       return;
@@ -74,7 +75,7 @@ class ResponseJson : public Response {
 
     // Parse and verify JSON string in body. FlatBuffer parser does not support
     // online parsing. So we only parse the body when we get everything.
-    bool parse_status = parser_->Parse(GetBody());
+    bool parse_status = parser_->Parse(response_body);
     if (!parse_status) {
       LogError("flatbuffers::Parser::Parse() failed: %s",
                parser_->error_.c_str());

@@ -21,7 +21,7 @@ namespace functions {
 namespace internal {
 
 Variant Encode(const Variant& variant) {
-  if (variant.is_int64()) {
+  if (false) {  // variant.is_int64()) {
     Variant m = Variant::EmptyMap();
     m.map()["@type"] = "type.googleapis.com/google.protobuf.Int64Value";
     m.map()["value"] = variant.AsString();
