@@ -49,14 +49,16 @@ message("Downloading CocoaPods...")
 
 execute_process(
   COMMAND /bin/bash -c
-          "mkdir -p ${FIREBASE_POD_DIR} && cd ${FIREBASE_POD_DIR} && cmake . -G Xcode && pod install  --repo-update --verbose"
+          "mkdir -p ${FIREBASE_POD_DIR} && cd ${FIREBASE_POD_DIR} && cmake . -G Xcode && ls -l && pod install  --repo-update --verbose"
   OUTPUT_VARIABLE pods_output
   COMMAND_ECHO STDOUT
 )
 
+message("=-=-=-=")
+
 execute_process(
   COMMAND /bin/bash -c
-          "find ${FIREBASE_POD_DIR}"
+          "ls -l ${FIREBASE_POD_DIR}"
 )
 
 message("${pods_output}")
