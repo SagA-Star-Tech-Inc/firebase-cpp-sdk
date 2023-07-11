@@ -51,6 +51,12 @@ execute_process(
   COMMAND /bin/bash -c
           "mkdir -p ${FIREBASE_POD_DIR} && cd ${FIREBASE_POD_DIR} && cmake . -G Xcode && pod install  --repo-update --verbose"
   OUTPUT_VARIABLE pods_output
+  COMMAND_ECHO STDOUT
+)
+
+execute_process(
+  COMMAND /bin/bash -c
+          "find ${FIREBASE_POD_DIR}"
 )
 
 message("${pods_output}")
