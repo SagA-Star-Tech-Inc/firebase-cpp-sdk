@@ -16,6 +16,8 @@ if(NOT IOS)
   return()
 endif()
 
+message("FIREBASE_POD_DIR: ${FIREBASE_POD_DIR}")
+
 # Add these two vars to the cache to make them avaliable in global scope
 set(FIREBASE_POD_DIR ${CMAKE_CURRENT_BINARY_DIR} CACHE STRING "")
 set(FIREBASE_POD_HEADER_DIR
