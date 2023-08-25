@@ -119,6 +119,12 @@ DatabaseReferenceInternal* DatabaseReferenceInternal::PushChild() {
                                        query_spec_.path.GetChild(child));
 }
 
+DatabaseReferenceInternal* DatabaseReferenceInternal::PushChild(
+    std::string child_name) {
+  return new DatabaseReferenceInternal(database_,
+                                       query_spec_.path.GetChild(child_name));
+}
+
 Future<void> DatabaseReferenceInternal::RemoveValue() {
   SafeFutureHandle<void> handle =
       ref_future()->SafeAlloc<void>(kDatabaseReferenceFnRemoveValue);

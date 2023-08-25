@@ -154,7 +154,7 @@ class DatabaseReference : public Query {
   ///
   /// @returns A newly created child, with a unique key.
   DatabaseReference PushChild() const;
-
+  DatabaseReference PushChild(std::string child_name) const;
   /// @brief Removes the value at this location from the database.
   ///
   /// This is an asynchronous operation which takes time to execute, and uses
@@ -165,8 +165,8 @@ class DatabaseReference : public Query {
   /// kErrorNone, the operation succeeded.
   ///
   /// @note Only one RemoveValue() should be running on a given database
-  /// location at the same time. If you need to run multiple operations at once,
-  /// use RunTransaction().
+  /// location at the same time. If you need to run multiple operations at
+  /// once, use RunTransaction().
   Future<void> RemoveValue();
 
   /// @brief Gets the result of the most recent call to RemoveValue();
@@ -175,7 +175,8 @@ class DatabaseReference : public Query {
   Future<void> RemoveValueLastResult();
 
   /// @brief Run a user-supplied callback function (passing in a context),
-  /// possibly multiple times, to perform an atomic transaction on the database.
+  /// possibly multiple times, to perform an atomic transaction on the
+  /// database.
   ///
   /// @see firebase::database::DoTransactionWithContext for more information.
   ///
@@ -187,15 +188,15 @@ class DatabaseReference : public Query {
   /// intermediate state changes during the transaction. If false, only the
   /// final state will cause events to be triggered.
   ///
-  /// @returns A Future result, which will complete when the transaction either
-  /// succeeds or fails. When the Future is completed, if its Error is
-  /// kErrorNone, the operation succeeded and the transaction was committed, and
-  /// the new value of the data will be returned in the DataSnapshot result. If
-  /// the Error is kErrorTransactionAbortedByUser, the transaction was aborted
-  /// because the transaction function returned kTransactionResultAbort, and the
-  /// old value will be returned in DataSnapshot. Otherwise, if some other error
-  /// occurred, Error and ErrorMessage will be set and DataSnapshot will be
-  /// invalid.
+  /// @returns A Future result, which will complete when the transaction
+  /// either succeeds or fails. When the Future is completed, if its Error is
+  /// kErrorNone, the operation succeeded and the transaction was committed,
+  /// and the new value of the data will be returned in the DataSnapshot
+  /// result. If the Error is kErrorTransactionAbortedByUser, the transaction
+  /// was aborted because the transaction function returned
+  /// kTransactionResultAbort, and the old value will be returned in
+  /// DataSnapshot. Otherwise, if some other error occurred, Error and
+  /// ErrorMessage will be set and DataSnapshot will be invalid.
   ///
   /// @note Only one RunTransaction() should be running on a given database
   /// location at the same time.
@@ -209,37 +210,38 @@ class DatabaseReference : public Query {
   ///
   /// @see firebase::database::DoTransactionFunction for more information.
   ///
-  /// @param[in] transaction_function The user-supplied function or lambda that
-  /// will be called, possibly multiple times, to perform the database
+  /// @param[in] transaction_function The user-supplied function or lambda
+  /// that will be called, possibly multiple times, to perform the database
   /// transaction.
   /// @param[in] trigger_local_events If true, events will be triggered for
   /// intermediate state changes during the transaction. If false, only the
   /// final state will cause events to be triggered.
   ///
-  /// @returns A Future result, which will complete when the transaction either
-  /// succeeds or fails. When the Future is completed, if its Error is
-  /// kErrorNone, the operation succeeded and the transaction was committed, and
-  /// the new value of the data will be returned in the DataSnapshot result. If
-  /// the Error is kErrorTransactionAbortedByUser, the transaction was aborted
-  /// because the transaction function returned kTransactionResultAbort, and the
-  /// old value will be returned in DataSnapshot. Otherwise, if some other error
-  /// occurred, Error and ErrorMessage will be set and DataSnapshot will be
-  /// invalid.
+  /// @returns A Future result, which will complete when the transaction
+  /// either succeeds or fails. When the Future is completed, if its Error is
+  /// kErrorNone, the operation succeeded and the transaction was committed,
+  /// and the new value of the data will be returned in the DataSnapshot
+  /// result. If the Error is kErrorTransactionAbortedByUser, the transaction
+  /// was aborted because the transaction function returned
+  /// kTransactionResultAbort, and the old value will be returned in
+  /// DataSnapshot. Otherwise, if some other error occurred, Error and
+  /// ErrorMessage will be set and DataSnapshot will be invalid.
   ///
   /// @note Only one RunTransaction() should be running on a given database
   /// location at the same time.
   ///
   /// @note This version (that accepts an std::function) is not available when
-  /// using stlport on Android. If you don't wish to use std::function, use the
-  /// overloaded method that accepts a simple function pointer with a context.
+  /// using stlport on Android. If you don't wish to use std::function, use
+  /// the overloaded method that accepts a simple function pointer with a
+  /// context.
   Future<DataSnapshot> RunTransaction(
       DoTransactionFunction transaction_function,
       bool trigger_local_events = true);
 #endif  //  defined(FIREBASE_USE_STD_FUNCTION) || defined(DOXYGEN)
 
 #if !defined(FIREBASE_USE_STD_FUNCTION) || defined(DOXYGEN)
-  /// @brief Run a user-supplied callback function, possibly multiple times, to
-  /// perform an atomic transaction on the database.
+  /// @brief Run a user-supplied callback function, possibly multiple times,
+  /// to perform an atomic transaction on the database.
   ///
   /// @see firebase::database::DoTransaction for more information.
   ///
@@ -249,15 +251,15 @@ class DatabaseReference : public Query {
   /// intermediate state changes during the transaction. If false, only the
   /// final state will cause events to be triggered.
   ///
-  /// @returns A Future result, which will complete when the transaction either
-  /// succeeds or fails. When the Future is completed, if its Error is
-  /// kErrorNone, the operation succeeded and the transaction was committed, and
-  /// the new value of the data will be returned in the DataSnapshot result. If
-  /// the Error is kErrorTransactionAbortedByUser, the transaction was aborted
-  /// because the transaction function returned kTransactionResultAbort, and the
-  /// old value will be returned in DataSnapshot. Otherwise, if some other error
-  /// occurred, Error and ErrorMessage will be set and DataSnapshot will be
-  /// invalid.
+  /// @returns A Future result, which will complete when the transaction
+  /// either succeeds or fails. When the Future is completed, if its Error is
+  /// kErrorNone, the operation succeeded and the transaction was committed,
+  /// and the new value of the data will be returned in the DataSnapshot
+  /// result. If the Error is kErrorTransactionAbortedByUser, the transaction
+  /// was aborted because the transaction function returned
+  /// kTransactionResultAbort, and the old value will be returned in
+  /// DataSnapshot. Otherwise, if some other error occurred, Error and
+  /// ErrorMessage will be set and DataSnapshot will be invalid.
   ///
   /// @note Only one RunTransaction() should be running on a given database
   /// location at the same time.
@@ -293,9 +295,9 @@ class DatabaseReference : public Query {
   /// This is an asynchronous operation which takes time to execute, and uses
   /// firebase::Future to return its result.
   ///
-  /// @param[in] priority Sort priority for this child relative to its siblings.
-  /// The Variant types accepted are Null, Int64, Double, and String. Other
-  /// types will return kErrorInvalidVariantType.
+  /// @param[in] priority Sort priority for this child relative to its
+  /// siblings. The Variant types accepted are Null, Int64, Double, and
+  /// String. Other types will return kErrorInvalidVariantType.
   ///
   /// @returns A Future result, which will complete when the operation either
   /// succeeds or fails. When the Future is completed, if its Error is
@@ -359,11 +361,12 @@ class DatabaseReference : public Query {
   /// succeeds or fails. When the Future is completed, if its Error is
   /// kErrorNone, the operation succeeded.
   ///
-  /// @note Only one SetValueAndPriority() should be running on a given database
-  /// location at the same time. SetValueAndPriority() can't be used on the same
-  /// location at the same time as either SetValue() or SetPriority(), and will
-  /// return kErrorConflictingOperationInProgress if you try. If you need to run
-  /// multiple operations at once, use RunTransaction().
+  /// @note Only one SetValueAndPriority() should be running on a given
+  /// database location at the same time. SetValueAndPriority() can't be used
+  /// on the same location at the same time as either SetValue() or
+  /// SetPriority(), and will return kErrorConflictingOperationInProgress if
+  /// you try. If you need to run multiple operations at once, use
+  /// RunTransaction().
   Future<void> SetValueAndPriority(Variant value, Variant priority);
 
   /// @brief Get the result of the most recent call to SetValueAndPriority().
@@ -373,10 +376,10 @@ class DatabaseReference : public Query {
 
   /// @brief Updates the specified child keys to the given values.
   ///
-  /// @param[in] values A variant of type Map. The keys are the paths to update
-  /// and must be of type String (or Int64/Double which are converted to
-  /// String). The values can be any Variant type. A value of Variant type Null
-  /// will delete the child.
+  /// @param[in] values A variant of type Map. The keys are the paths to
+  /// update and must be of type String (or Int64/Double which are converted
+  /// to String). The values can be any Variant type. A value of Variant type
+  /// Null will delete the child.
   ///
   /// @returns A Future result, which will complete when the operation either
   /// succeeds or fails. When the Future is completed, if its Error is
@@ -392,8 +395,8 @@ class DatabaseReference : public Query {
   /// This is an asynchronous operation which takes time to execute, and uses
   /// firebase::Future to return its result.
   ///
-  /// @param[in] values The paths to update, and their new child values. A value
-  /// of type Null will delete that particular child.
+  /// @param[in] values The paths to update, and their new child values. A
+  /// value of type Null will delete that particular child.
   ///
   /// @returns A Future result, which will complete when the operation either
   /// succeeds or fails. When the Future is completed, if its Error is
@@ -414,17 +417,18 @@ class DatabaseReference : public Query {
   /// @returns The absolute URL of the location this reference refers to.
   std::string url() const;
 
-  /// @brief Get the disconnect handler, which controls what actions the server
-  /// will perform to this location's data when this client disconnects.
+  /// @brief Get the disconnect handler, which controls what actions the
+  /// server will perform to this location's data when this client
+  /// disconnects.
   ///
   /// @returns Disconnection handler for this location. You can use this to
   /// queue up operations on the server to be performed when the client
   /// disconnects.
   DisconnectionHandler* OnDisconnect();
 
-  /// @brief Manually disconnect Firebase Realtime Database from the server, and
-  /// disable automatic reconnection. This will affect all other instances of
-  /// DatabaseReference as well.
+  /// @brief Manually disconnect Firebase Realtime Database from the server,
+  /// and disable automatic reconnection. This will affect all other instances
+  /// of DatabaseReference as well.
   void GoOffline();
 
   /// @brief Manually reestablish connection to the Firebase Realtime Database
@@ -441,7 +445,8 @@ class DatabaseReference : public Query {
   /// @cond FIREBASE_APP_INTERNAL
 
   // Remove the "Query" cleanup registration (which the base class constructor
-  // already registered) and replace it with a "DatabaseReference" registration.
+  // already registered) and replace it with a "DatabaseReference"
+  // registration.
   //
   // This is necessary so that if the instance needs to be cleaned up, the
   // correct pointer type will be used to access it.

@@ -63,6 +63,7 @@ class DatabaseReferenceInternal : public QueryInternal {
   DatabaseReferenceInternal* Child(const char* path);
 
   DatabaseReferenceInternal* PushChild();
+  DatabaseReferenceInternal* PushChild(std::string child_name);
 
   Future<void> RemoveValue();
 

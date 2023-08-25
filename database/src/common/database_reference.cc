@@ -180,6 +180,11 @@ DatabaseReference DatabaseReference::PushChild() const {
                    : DatabaseReference(nullptr);
 }
 
+DatabaseReference DatabaseReference::PushChild(std::string child_name) const {
+  return internal_ ? DatabaseReference(internal_->PushChild(child_name))
+                   : DatabaseReference(nullptr);
+}
+
 Future<void> DatabaseReference::RemoveValue() {
   return internal_ ? internal_->RemoveValue() : Future<void>();
 }
