@@ -25,11 +25,16 @@
 #include "app/src/include/firebase/internal/common.h"
 #include "app/src/include/firebase/internal/mutex.h"
 #include "app/src/include/firebase/internal/platform.h"
+#include "app/src/include/firebase/variant.h"
 #include "app/src/include/google_play_services/availability.h"
 #include "app/src/reference_counted_future_impl.h"
+// #include "app/src/variant_util.h"
 
 namespace firebase {
 
+namespace util {
+firebase::Variant JsonToVariant(const char* json);
+}
 // Macros that allow Android code to easily fail initialization if Google Play
 // services is unavailable.
 
@@ -242,7 +247,7 @@ std::vector<std::string> SplitString(const std::string& s, char delimiter);
 // identifier. Primarily used to manage listening to JNI Tasks on Android.
 // Note that repeated calls are expected to return different values.
 std::string CreateApiIdentifier(const char* api_id, void* object);
-
+firebase::Variant JsonToVariant(const char* json);
 }  // namespace firebase
 
 #endif  // FIREBASE_APP_SRC_UTIL_H_

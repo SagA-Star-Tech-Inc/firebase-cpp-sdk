@@ -357,6 +357,9 @@ std::string CreateApiIdentifier(const char* api_id, void* object) {
   snprintf(&(created[0]), size, format, api_id, object_ptr, extra_id);
   return created;
 }
+firebase::Variant JsonToVariant(const char* json) {
+  return firebase::util::JsonToVariant(json);
+}
 
 // NOLINTNEXTLINE - allow namespace overridden
 }  // namespace firebase
