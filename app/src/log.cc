@@ -43,7 +43,7 @@ static void DefaultLogCallback(LogLevel log_level, const char* message,
                                void* /*callback_data*/);
 
 #if FIREBASE_LOG_DEBUG
-const LogLevel kDefaultLogLevel = kLogLevelDebug;
+const LogLevel kDefaultLogLevel = kLogLevelVerbose;
 #else
 const LogLevel kDefaultLogLevel = kLogLevelInfo;
 #endif  // FIREBASE_LOG_DEBUG
