@@ -57,6 +57,7 @@ enum Error {
   /// The transaction was aborted, because the user's DoTransaction function
   /// returned kTransactionResultAbort instead of kTransactionResultSuccess.
   kErrorTransactionAbortedByUser,
+  kErrorTriggerPayloadTooLarge,
 };
 
 /// @brief Get the human-readable error message corresponding to an error code.

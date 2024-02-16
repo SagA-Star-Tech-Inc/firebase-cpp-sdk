@@ -1267,6 +1267,7 @@ static const struct ErrorMap {
     {"unavailable", kErrorUnavailable},
     {"network_error", kErrorNetworkError},
     {"write_canceled", kErrorWriteCanceled},
+    {"trigger_payload_too_large", kErrorTriggerPayloadTooLarge},
 };
 
 Error PersistentConnection::StatusStringToErrorCode(const std::string& status) {
